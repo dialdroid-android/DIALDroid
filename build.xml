@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project dialdroid">
+        <property name="dir.buildfile" value="."/> 
+    <property name="dir.jarfile" value="${dir.buildfile}/build"/>
+	
+	
+	<target name="compile">
+			<mkdir dir="target/classes" />			
+			<javac srcdir="src" includeantruntime="true" source="1.8" target="1.8" destdir="target/classes" debug="true">
+				<classpath>					
+					<fileset dir="lib">
+						<include name="*.jar" />
+					</fileset>
+				</classpath>
+			</javac>
+		</target>
+	
+    <target name="create_run_jar" depends="compile">
+    	<copy file="${dir.buildfile}/AndroidCallbacks.txt" tofile="${dir.jarfile}/AndroidCallbacks.txt" />
+    	<copy file="${dir.buildfile}/cc.properties" tofile="${dir.jarfile}/cc.properties" />
+    	<copy file="${dir.buildfile}/ic3-android.jar" tofile="${dir.jarfile}/ic3-android.jar" />
+    	<copy file="${dir.buildfile}/EasyTaintWrapperSource.txt" tofile="${dir.jarfile}/EasyTaintWrapperSource.txt" />
+    	<copy file="${dir.buildfile}/dialdroid.sh" tofile="${dir.jarfile}/dialdroid.sh" />
+    	
+        <jar destfile="${dir.jarfile}/dialdroid.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="com.yaogroup.collusion.AppAnalysis"/>
+                <attribute name="Class-Path" value="."/>
+            	<attribute name="Implementation-Vendor" value=""/>
+            	<attribute name="Implementation-Title" value="DIALDroid"/>
+            	<attribute name="Implementation-Version" value="1.0.0"/>            	
+                <attribute name="Rsrc-Class-Path" value="./ infoflow-android-dialdroid.jar infoflow-dialdroid.jar soot-dialdroid.jar ic3-dialdroid-classes.jar axml-2.0.0.jar coal-0.1.7.jar coal-strings-0.1.2.jar commons-cli-1.3.1.jar jsch-0.1.51.jar log4j-1.2.17.jar mysql-connector-java-5.1.31.jar protobuf-java-2.5.0.jar slf4j-api-1.7.7.jar slf4j-log4j12-1.7.13.jar herosclasses-trunk.jar soot-dialdroid.jar infoflow-android-dialdroid.jar infoflow-dialdroid.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="${dir.buildfile}/bin"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="infoflow-android-dialdroid.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="infoflow-dialdroid.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="soot-dialdroid.jar"/>
+            <fileset dir="${dir.buildfile}/target/classes"/>            
+            <zipfileset dir="${dir.buildfile}/lib" includes="ic3-dialdroid-classes.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="axml-2.0.0.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="coal-0.1.7.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="coal-strings-0.1.2.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="commons-cli-1.3.1.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="jsch-0.1.51.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="log4j-1.2.17.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="mysql-connector-java-5.1.31.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="protobuf-java-2.5.0.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="slf4j-api-1.7.7.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="slf4j-log4j12-1.7.13.jar"/>
+            <zipfileset dir="${dir.buildfile}/lib" includes="herosclasses-trunk.jar"/>          
+        </jar>
+    </target>
+</project>
