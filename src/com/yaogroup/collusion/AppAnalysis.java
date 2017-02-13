@@ -110,7 +110,7 @@ public class AppAnalysis {
 				Timers.v().exitPathTimer.start();
 				InfoflowResults results = soot.jimple.infoflow.android.TestApps.Test.runAnalysisForResults(
 						new String[] { apkFile.getAbsolutePath(), classPath,
-								"--aplength", "2", "--timeout", "7200" });
+								"--aplength", "4", "--timeout", "7200" });
 
 				if (Test.InfoFlowComputationTimeOut) {
 					InfoFlowComputationTimeOut = true;

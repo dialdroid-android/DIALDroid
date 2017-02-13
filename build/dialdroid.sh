@@ -1,4 +1,4 @@
-#!/bin/bash
+adp#!/bin/bash
 
 dbname="dialdroid_test"
 jarfile="dialdroid.jar"
