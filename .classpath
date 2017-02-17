@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="lib/infoflow-dialdroid.jar"/>
 	<classpathentry kind="lib" path="lib/soot-dialdroid.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/ic3-dialdroid-classes.jar"/>
+	<classpathentry kind="lib" path="lib/ic3-dialdroid-classes.jar" sourcepath="/ic3-dialdroid"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

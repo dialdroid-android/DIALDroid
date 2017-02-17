@@ -7,7 +7,9 @@ import com.yaogroup.db.DialDroidSQLConnection;
 
 import edu.psu.cse.siis.ic3.Timers;
 import edu.psu.cse.siis.ic3.db.SQLConnection;
+import edu.psu.cse.siis.ic3.db.Table;
 import edu.psu.cse.siis.ic3.manifest.ManifestPullParser;
+import edu.psu.cse.siis.ic3.manifest.SHA256Calculator;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.Stmt;
@@ -52,21 +54,25 @@ public class AppAnalysis {
 
 	public static void main(String[] args) {
 
-		if (args.length < 3) {
-			System.out.println("Invalid program usage!! use: computeicc|appanalysis classpath dbname [directory] [category]");
+		if (args.length < 4) {
+			System.out.println("Invalid program usage!! use: computeicc|appanalysis classpath dbname dbhostname [directory] [category]");
 			return;
 		}
 
 		String dbName = args[2].trim();
-
+		String dbHost = args[3].trim();
+		
+		Table.setDBHost(dbHost);
+		DialDroidSQLConnection.init(dbName, "./cc.properties", null, 3306);
+		
 		if (args[0].compareToIgnoreCase("computeicc") == 0) {
-			DialDroidSQLConnection.init(dbName, "./cc.properties", null, 3306);
+			
 			DialDroidSQLConnection.computeSensitiveChannels();
 			return;
 		}
 
 		if (args[0].compareToIgnoreCase("appanalysis") != 0) {
-			System.out.println("Invalid program usage!! use: computeicc|appanalysis classpath dbname [directory] [category]");
+			System.out.println("Invalid program usage!! use: computeicc|appanalysis classpath dbname dbhostname [directory] [category]");
 			return;
 		}
 
@@ -76,10 +82,8 @@ public class AppAnalysis {
 
 		ArrayList<File> apkList = new ArrayList<File>();
 
-		getApkList(apkDirectory, apkList);
-
-		DialDroidSQLConnection.init(dbName, "./cc.properties", null, 3306);
-
+		getApkList(apkDirectory, apkList);		
+	
 		for (File apkFile : apkList) {
 
 			try {
@@ -87,10 +91,10 @@ public class AppAnalysis {
 				String appName = apkFile.getName().toLowerCase();
 				appName = appName.substring(0, appName.indexOf(".apk"));
 				System.out.println(appName);
-				ManifestPullParser manifestParser = new ManifestPullParser();
-				manifestParser.loadManifestFile(apkFile.getAbsolutePath());
+				
+				String shasum = SHA256Calculator.getSHA256(apkFile);
 
-				if (SQLConnection.checkIfAppAnalyzed(manifestParser.getPackageName(), manifestParser.getVersion())) {
+				if (SQLConnection.checkIfAppAnalyzed(shasum)) {
 					DialDroidSQLConnection.saveAppCategory(appCategory, apkFile.getAbsolutePath());
 					continue;
 				}
@@ -100,7 +104,7 @@ public class AppAnalysis {
 
 				boolean InfoFlowComputationTimeOut = false;
 
-				edu.psu.cse.siis.ic3.Main.main(new String[] { "-input", apkFile.getAbsolutePath(), "-cp",
+				edu.psu.cse.siis.ic3.Main.main(new String[] { "-in", apkFile.getAbsolutePath(), "-cp",
 						classPath, "-db", "./cc.properties", "-dbname",
 						dbName });
 
@@ -110,7 +114,7 @@ public class AppAnalysis {
 				Timers.v().exitPathTimer.start();
 				InfoflowResults results = soot.jimple.infoflow.android.TestApps.Test.runAnalysisForResults(
 						new String[] { apkFile.getAbsolutePath(), classPath,
-								"--aplength", "4", "--timeout", "7200" });
+								"--aplength", "3", "--timeout", "7200" });
 
 				if (Test.InfoFlowComputationTimeOut) {
 					InfoFlowComputationTimeOut = true;
