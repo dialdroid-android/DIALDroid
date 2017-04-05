@@ -16,3 +16,6 @@ Please note the the cc.properties file, ic3-android.jar, AndroidCallbacks.txt, a
 8. dialdroid will analyze the apps one by one and finally compute the sensitive channels (ICC links that can potentially carry sensitive information) and store those in the table named SensitiveChannels.
 9. Use following MySQL query to compute ICC-based leaks: https://github.com/dialdroid-android/dialdroid-db/blob/master/ICCBasedLeaks.sql
 10. Use following MySQL query to compute privilege escalations: https://github.com/dialdroid-android/dialdroid-db/blob/master/PrivEscalations.sql
+
+##Issues
+If you encounter any issues in running DIALDroid, please post it in the issues tab. Alternatively, you can also contact Dr. Amiangshu Bosu [abosu at cs dot siu dot edu].
