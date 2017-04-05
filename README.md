@@ -2,7 +2,7 @@
 
 DIALDroid is a highly scalable tool to identify inter-app collusions and privilege escalations among Android apps. 
 
-##Instructions
+## Instructions
 1. Please download or clone this repository.
 2. You can directly use the standalone Jar file (dialdroid.jar) inside the build directory.
 Or you can build using ant (ant ).
@@ -17,5 +17,5 @@ Please note the the cc.properties file, ic3-android.jar, AndroidCallbacks.txt, a
 9. Use following MySQL query to compute ICC-based leaks: https://github.com/dialdroid-android/dialdroid-db/blob/master/ICCBasedLeaks.sql
 10. Use following MySQL query to compute privilege escalations: https://github.com/dialdroid-android/dialdroid-db/blob/master/PrivEscalations.sql
 
-##Issues
+## Issues
 If you encounter any issues in running DIALDroid, please post it in the issues tab. Alternatively, you can also contact Dr. Amiangshu Bosu [abosu at cs dot siu dot edu].
