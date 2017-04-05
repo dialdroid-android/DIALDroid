@@ -76,8 +76,8 @@ public class AppAnalysis {
 			return;
 		}
 
-		File apkDirectory = new File(args[3]);
-		String appCategory = args[4].trim();
+		File apkDirectory = new File(args[4]);
+		String appCategory = args[5].trim();
 		String classPath = args[1].trim();
 
 		ArrayList<File> apkList = new ArrayList<File>();
@@ -106,7 +106,7 @@ public class AppAnalysis {
 
 				edu.psu.cse.siis.ic3.Main.main(new String[] { "-in", apkFile.getAbsolutePath(), "-cp",
 						classPath, "-db", "./cc.properties", "-dbname",
-						dbName });
+						dbName, "-dbhost",dbHost });
 
 				//DialDroidSQLConnection.saveAppCategory(appCategory, apkFile.getAbsolutePath());
 				//Timers.v().saveTimeToDb();
