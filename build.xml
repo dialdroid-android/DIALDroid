@@ -15,6 +15,16 @@
 			</javac>
 		</target>
 	
+	  <target name="clean">
+	    <delete quiet="true">
+	      <fileset dir="target/classes" includes="**/*.class" />
+	    </delete>
+	  	<delete quiet="true">
+	  		      <fileset dir="${dir.buildfile}/build" includes="*.jar" />
+	  		    </delete>
+	  </target>
+
+	
     <target name="create_run_jar" depends="compile">
     	<copy file="${dir.buildfile}/AndroidCallbacks.txt" tofile="${dir.jarfile}/AndroidCallbacks.txt" />
     	<copy file="${dir.buildfile}/cc.properties" tofile="${dir.jarfile}/cc.properties" />

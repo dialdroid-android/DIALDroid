@@ -114,7 +114,7 @@ public class AppAnalysis {
 				Timers.v().exitPathTimer.start();
 				InfoflowResults results = soot.jimple.infoflow.android.TestApps.Test.runAnalysisForResults(
 						new String[] { apkFile.getAbsolutePath(), classPath,
-								"--aplength", "3", "--timeout", "7200" });
+								"--aplength", "2", "--timeout", "600" });
 
 				if (Test.InfoFlowComputationTimeOut) {
 					InfoFlowComputationTimeOut = true;
@@ -123,7 +123,7 @@ public class AppAnalysis {
 					results = soot.jimple.infoflow.android.TestApps.Test.runAnalysisForResults(new String[] {
 							apkFile.getAbsolutePath(), classPath,
 							"--pathalgo", "SOURCESONLY", "--aplength", "1", "--NOPATHS", "--layoutmode", "none",
-							"--aliasflowins", "--noarraysize", "--NOCALLBACKS", "--timeout", "7200" });
+							"--aliasflowins", "--noarraysize", "--NOCALLBACKS", "--timeout", "600" });
 				}
 
 				DialDroidSQLConnection.insertSourceSinkCount(InfoflowResults.numSources, InfoflowResults.numSinks);
@@ -176,7 +176,7 @@ public class AppAnalysis {
 				Timers.v().entryPathTimer.start();
 				results = soot.jimple.infoflow.android.TestApps.Test.runAnalysisForResults(
 						new String[] { apkFile.getAbsolutePath(), classPath,
-								"--iccentry", "--aplength", "2", "--timeout", "7200" });
+								"--iccentry", "--aplength", "1", "--timeout", "400" });
 
 				if (Test.InfoFlowComputationTimeOut) {
 					InfoFlowComputationTimeOut = true;
@@ -186,7 +186,7 @@ public class AppAnalysis {
 							apkFile.getAbsolutePath(), classPath,
 							"--iccentry", "--pathalgo", "SOURCESONLY", "--aplength", "1", "--nopaths", "--layoutmode",
 							"none", "--aliasflowins", "--noarraysize", "--nocallback", "--nostatic", "--timeout",
-							"7200" });
+							"400" });
 				}
 
 				Timers.v().entryPathTimer.end();
