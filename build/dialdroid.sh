@@ -23,4 +23,4 @@ do
    fi
 done
 
-java -jar $jarfile computeicc $classpath $dbname 
+java -jar $jarfile computeicc $classpath $dbname $dbhost
